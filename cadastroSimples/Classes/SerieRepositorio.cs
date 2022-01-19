@@ -6,36 +6,36 @@ namespace DIO.Series
 {
     public class SerieRepositorio : IRepositorio<Series>
     {
-        private List<Series> listaSerie = new List<Series>();
-        public void Atualizar(int id, Series objeto)
+        private List<Series> listaPessoa = new List<Series>();
+        public void Atualizar(int id, Series pessoa)
         {
-            listaSerie[id] = objeto;
+            listaPessoa[id] = pessoa;
         }
 
         public void Exclui(int id)
         {
-            listaSerie[id].Excluir();
+            listaPessoa[id].Excluir();
             //implemento envio email
         }
 
-        public void Insere(Series objeto)
+        public void Insere(Series pessoa)
         {
-            listaSerie.Add(objeto);
+            listaPessoa.Add(pessoa);
         }
 
         public List<Series> List()
         {
-            return listaSerie;
+            return listaPessoa;
         }
 
         public int ProximoId()
         {
-            return listaSerie.Count;
+            return listaPessoa.Count;
         }
 
         public Series RetornarPorId(int id)
         {
-            return listaSerie[id];
+            return listaPessoa[id];
         }
 
         

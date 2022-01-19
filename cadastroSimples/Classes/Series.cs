@@ -6,22 +6,31 @@ namespace DIO.Series
     {
         //Atributos
         private Genero Genero { get; set; }
-        private string Titulo { get; set; }
-        private string Descricao { get; set; }
+        private string Nome { get; set; }
+        private string Trabalho { get; set; }
         private int Ano { get; set; }
 
         private bool Excluido { get; set; }
 
         //metodos
 
-        public Series(int id, Genero genero, string titulo, string descricao, int ano)
+        public Series(int id, Genero genero, string nome, string Trabalho, int ano, string Nome)
         {
             this.Id = id;
             this.Genero = genero;
-            this.Titulo = titulo;
-            this.Descricao = descricao;
+            this.Nome = nome;
+            this.Trabalho = Trabalho;
             this.Ano = ano;
             this.Excluido = false;
+        }
+
+        public Series(int id, Genero genero, string Nome, string Trabalho, int ano)
+        {
+            Id = id;
+            Genero = genero;
+            this.Nome = Nome;
+            this.Trabalho = Trabalho;
+            Ano = ano;
         }
 
         public override string ToString()
@@ -29,16 +38,16 @@ namespace DIO.Series
             //Environment.NewLine https://docs.microsoft.com/en-us/dotnet/api/system.environment.newline?view=netcore-3.1
             string retorno = "";
             retorno += "Gênero: " + this.Genero + Environment.NewLine;
-            retorno += "Titulo: " + this.Titulo + Environment.NewLine;
-            retorno += "Descrição: " + this.Descricao + Environment.NewLine;
-            retorno += "Ano de Inicio: " + this.Ano + Environment.NewLine;
+            retorno += "Nome: " + this.Nome + Environment.NewLine;
+            retorno += "Trabalho: " + this.Trabalho + Environment.NewLine;
+            retorno += "Data de nascimento: " + this.Ano + Environment.NewLine;
             retorno += "Excluido: " + this.Excluido;
             return retorno;
         }
 
-        public string retornaTitulo()
+        public string retornaNome()
         {
-            return this.Titulo;
+            return this.Nome;
         }
 
         public int retornaId()
