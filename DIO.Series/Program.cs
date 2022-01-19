@@ -28,6 +28,9 @@ namespace DIO.Series
                     case "5":
                         VisualizarSerie();
                         break;
+                    case "C":
+                        Console.Clear();
+                        break;
                     
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -38,17 +41,49 @@ namespace DIO.Series
 
         private static void VisualizarSerie()
         {
-            throw new NotImplementedException();
+            System.Console.WriteLine("Digite o id da série: ");
+            int indiceSerie = int.Parse(Console.ReadLine());
+
+            var serie = repositorio.RetornarPorId(indiceSerie);
+            
+            System.Console.WriteLine(serie);
         }
 
         private static void ExcluirSerie()
         {
-            throw new NotImplementedException();
+            System.Console.WriteLine("Digite o id da série: ");
+            int indiceSerie = int.Parse(Console.ReadLine());
+
+            repositorio.Exclui(indiceSerie);
         }
 
         private static void AtualizarSerie()
         {
-            throw new NotImplementedException();
+            System.Console.WriteLine("Digite o id da série: ");
+            int indiceSerie = int.Parse(Console.ReadLine());
+
+            foreach (var i in Enum.GetValues(typeof(Genero)))
+            {
+                System.Console.WriteLine("{0}-{1}", i, Enum.GetName(typeof(Genero), i));
+            }
+            System.Console.WriteLine("Digite o gênero entre as opções acima: ");
+            int entradaGenero = int.Parse(Console.ReadLine());
+
+            System.Console.WriteLine("Dgigte o Titulo da Série: ");
+            string entradaTitulo = Console.ReadLine();
+
+            System.Console.WriteLine("Digite o gênero entre as opções acima: ");
+            int entradaAno = int.Parse(Console.ReadLine());
+
+            System.Console.WriteLine("Dgigte o Titulo da Série: ");
+            string entradaDescricao = Console.ReadLine();
+
+            Series atualizaSerie = new Series(id: repositorio.ProximoId(),
+                                         genero: (Genero)entradaGenero,
+                                         titulo: entradaTitulo,
+                                         descricao: entradaDescricao,
+                                         ano: entradaAno);
+            repositorio.Atualizar(indiceSerie, atualizaSerie);
         }
 
         private static void InserirSeries()
@@ -92,7 +127,8 @@ namespace DIO.Series
             }
             foreach (var serie in lista)
             {
-                System.Console.WriteLine("#ID {0}: {1}", serie.retornaId(), serie.retornaTitulo());
+                var excluido = serie.retornaExcluido();
+                System.Console.WriteLine("#ID {0}: {1}", serie.retornaId(), serie.retornaTitulo(), excluido ? "Excluido" : ""); //verdadeiro falso
             }
         }
 
