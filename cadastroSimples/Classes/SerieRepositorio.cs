@@ -4,40 +4,37 @@ using DIO.Series.Interfaces;
 
 namespace DIO.Series
 {
-    public class SerieRepositorio : IRepositorio<Series>
-    {
-        private List<Series> listaPessoa = new List<Series>();
-        public void Atualizar(int id, Series pessoa)
-        {
-            listaPessoa[id] = pessoa;
-        }
+	public class SerieRepositorio : IRepositorio<Serie>
+	{
+        private List<Serie> listaSerie = new List<Serie>();
+		public void Atualiza(int id, Serie objeto)
+		{
+			listaSerie[id] = objeto;
+		}
 
-        public void Exclui(int id)
-        {
-            listaPessoa[id].Excluir();
-            //implemento envio email
-        }
+		public void Exclui(int id)
+		{
+			listaSerie[id].Excluir();
+		}
 
-        public void Insere(Series pessoa)
-        {
-            listaPessoa.Add(pessoa);
-        }
+		public void Insere(Serie objeto)
+		{
+			listaSerie.Add(objeto);
+		}
 
-        public List<Series> List()
-        {
-            return listaPessoa;
-        }
+		public List<Serie> Lista()
+		{
+			return listaSerie;
+		}
 
-        public int ProximoId()
-        {
-            return listaPessoa.Count;
-        }
+		public int ProximoId()
+		{
+			return listaSerie.Count;
+		}
 
-        public Series RetornarPorId(int id)
-        {
-            return listaPessoa[id];
-        }
-
-        
-    }
+		public Serie RetornaPorId(int id)
+		{
+			return listaSerie[id];
+		}
+	}
 }

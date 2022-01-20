@@ -9,148 +9,158 @@ namespace DIO.Series
         {
             string opcaoUsuario = ObterOpcaoUsuario();
 
-            while (opcaoUsuario.ToUpper() != "X")
-            {
-                switch (opcaoUsuario)
-                {
-                    case "1":
-                        ListarSeries();
-                        break;
-                    case "2":
-                        InserirSeries();
-                        break;
-                    case "3":
-                        AtualizarSerie();
-                        break;
-                    case "4":
-                        ExcluirSerie();
-                        break;
-                    case "5":
-                        VisualizarSerie();
-                        break;
-                    case "C":
-                        Console.Clear();
-                        break;
-                    
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                    
-                }
-            }
-        }
+			while (opcaoUsuario.ToUpper() != "X")
+			{
+				switch (opcaoUsuario)
+				{
+					case "1":
+						ListarSeries();
+						break;
+					case "2":
+						InserirSerie();
+						break;
+					case "3":
+						AtualizarSerie();
+						break;
+					case "4":
+						ExcluirSerie();
+						break;
+					case "5":
+						VisualizarSerie();
+						break;
+					case "C":
+						Console.Clear();
+						break;
 
-        private static void VisualizarSerie()
-        {
-            System.Console.WriteLine("Digite o id da Pessoa: ");
-            int indiceSerie = int.Parse(Console.ReadLine());
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
 
-            var serie = repositorio.RetornarPorId(indiceSerie);
-            
-            System.Console.WriteLine(serie);
+				opcaoUsuario = ObterOpcaoUsuario();
+			}
+
+			Console.WriteLine("Obrigado por utilizar nossos serviços.");
+			Console.ReadLine();
         }
 
         private static void ExcluirSerie()
-        {
-            System.Console.WriteLine("Digite o id da Pessoa: ");
-            int indiceSerie = int.Parse(Console.ReadLine());
+		{
+			Console.Write("Digite o id da pessoa: ");
+			int indiceSerie = int.Parse(Console.ReadLine());
 
-            repositorio.Exclui(indiceSerie);
-        }
+			repositorio.Exclui(indiceSerie);
+		}
+
+        private static void VisualizarSerie()
+		{
+			Console.Write("Digite o id da pessoa: ");
+			int indiceSerie = int.Parse(Console.ReadLine());
+
+			var serie = repositorio.RetornaPorId(indiceSerie);
+
+			Console.WriteLine(serie);
+		}
 
         private static void AtualizarSerie()
-        {
-            System.Console.WriteLine("Inserir nova pessoa");
-            int indiceSerie = int.Parse(Console.ReadLine());
-            
+		{
+			Console.Write("Digite o id da pessoa: ");
+			int indiceSerie = int.Parse(Console.ReadLine());
 
-            foreach (int i in Enum.GetValues(typeof(Genero)))
-            {
-                System.Console.WriteLine("{0}-{1}", i, Enum.GetName(typeof(Genero), i));
-            }
-            System.Console.WriteLine("Digite o gênero entre as opções acima: ");
-            int entradaGenero = int.Parse(Console.ReadLine());
+			// https://docs.microsoft.com/pt-br/dotnet/api/system.enum.getvalues?view=netcore-3.1
+			// https://docs.microsoft.com/pt-br/dotnet/api/system.enum.getname?view=netcore-3.1
+			foreach (int i in Enum.GetValues(typeof(Genero)))
+			{
+				Console.WriteLine("{0}-{1}", i, Enum.GetName(typeof(Genero), i));
+			}
+			Console.Write("Digite o gênero entre as opções acima: ");
+			int entradaGenero = int.Parse(Console.ReadLine());
 
-            System.Console.WriteLine("Dgigte o Nome da pessoa: ");
-            string entradaNome = Console.ReadLine();
+			Console.Write("Digite o Nome da pessoa: ");
+			string entradaTrabalho = Console.ReadLine();
 
-            System.Console.WriteLine("Digite a data de nascimento: ");
-            int entradaAno = int.Parse(Console.ReadLine());
+			Console.Write("Dgigte o seu trabalho: ");
+			int entradaAno = int.Parse(Console.ReadLine());
 
-            System.Console.WriteLine("Dgigte o seu trabalho");
-            string entradaTrabalho = Console.ReadLine();
+			Console.Write("Digite a Descrição da pessoa: ");
+			string entradaDescricao = Console.ReadLine();
 
-            Series atualizaSerie = new Series(id: repositorio.ProximoId(),
-                                         genero: (Genero)entradaGenero,
-                                         Nome: entradaNome,
-                                         Trabalho: entradaTrabalho,
-                                         ano: entradaAno);
-            
-            repositorio.Atualizar(indiceSerie, atualizaSerie);
-        }
+			Serie atualizaSerie = new Serie(id: indiceSerie,
+										genero: (Genero)entradaGenero,
+										trabalho: entradaTrabalho,
+										ano: entradaAno,
+										descricao: entradaDescricao);
 
-        private static void InserirSeries()
-        {
-            System.Console.WriteLine("Inserir nova pessoa");
-
-            foreach (int i in Enum.GetValues(typeof(Genero)))
-            {
-                System.Console.WriteLine("{0}-{1}", i, Enum.GetName(typeof(Genero), i));
-            }
-            System.Console.WriteLine("Digite o gênero entre as opções acima: ");
-            int entradaGenero = int.Parse(Console.ReadLine());
-
-            System.Console.WriteLine("Dgigte o Nome da pessoa: ");
-            string entradaNome = Console.ReadLine();
-
-            System.Console.WriteLine("Digite a data de nascimento: ");
-            int entradaAno = int.Parse(Console.ReadLine());
-
-            System.Console.WriteLine("Dgigte o seu trabalho");
-            string entradaTrabalho = Console.ReadLine();
-
-            Series novaSerie = new Series(id: repositorio.ProximoId(),
-                                         genero: (Genero)entradaGenero,
-                                         Nome: entradaNome,
-                                         Trabalho: entradaTrabalho,
-                                         ano: entradaAno);
-            repositorio.Insere(novaSerie);
-        }
-
+			repositorio.Atualiza(indiceSerie, atualizaSerie);
+		}
         private static void ListarSeries()
-        {
-            System.Console.WriteLine("Listar pessoas");
+		{
+			Console.WriteLine("Listar pessoas");
 
-            var lista = repositorio.List();
+			var lista = repositorio.Lista();
 
-            if (lista.Count == 0)
-            {
-                System.Console.WriteLine("Nenhuma pessoa cadastrada. ");
-                return;
-            }
-            foreach (var serie in lista)
-            {
+			if (lista.Count == 0)
+			{
+				Console.WriteLine("Nenhuma pessoa cadastrada.");
+				return;
+			}
+
+			foreach (var serie in lista)
+			{
                 var excluido = serie.retornaExcluido();
-                System.Console.WriteLine("#ID {0}: {1}", serie.retornaId(), serie.retornaNome(), excluido ? "Excluido" : ""); //verdadeiro falso
-            }
-        }
+                
+				Console.WriteLine("#ID {0}: - {1} {2}", serie.retornaId(), serie.retornaTrabalho(), (excluido ? "*Excluído*" : ""));
+			}
+		}
+
+        private static void InserirSerie()
+		{
+			Console.WriteLine("Inserir nova pessoa");
+
+			// https://docs.microsoft.com/pt-br/dotnet/api/system.enum.getvalues?view=netcore-3.1
+			// https://docs.microsoft.com/pt-br/dotnet/api/system.enum.getname?view=netcore-3.1
+			foreach (int i in Enum.GetValues(typeof(Genero)))
+			{
+				Console.WriteLine("{0}-{1}", i, Enum.GetName(typeof(Genero), i));
+			}
+			Console.Write("Digite o gênero entre as opções acima: ");
+			int entradaGenero = int.Parse(Console.ReadLine());
+
+			Console.Write("Digite o Nome da pessoa: ");
+			string entradaTrabalho = Console.ReadLine();
+
+			Console.Write("Ano de nascimento: ");
+			int entradaAno = int.Parse(Console.ReadLine());
+
+			Console.Write("Dgigte o seu trabalho: ");
+			string entradaDescricao = Console.ReadLine();
+
+			Serie novaSerie = new Serie(id: repositorio.ProximoId(),
+										genero: (Genero)entradaGenero,
+										trabalho: entradaTrabalho,
+										ano: entradaAno,
+										descricao: entradaDescricao);
+
+			repositorio.Insere(novaSerie);
+		}
 
         private static string ObterOpcaoUsuario()
-        {
-            System.Console.WriteLine();
-            System.Console.WriteLine("DIO Cadastro a seu dispor!!!");
-            System.Console.WriteLine("Informe a opção desejada:");
+		{
+			Console.WriteLine();
+			Console.WriteLine("DIO pessoas a seu dispor!!!");
+			Console.WriteLine("Informe a opção desejada:");
 
-            System.Console.WriteLine("1- Listar Pessoa");
-            System.Console.WriteLine("2- Inserir nova pessoa");
-            System.Console.WriteLine("3- Atualizar pessoa");
-            System.Console.WriteLine("4- Excluir pessoa");
-            System.Console.WriteLine("5- Visualizar pessoa");
-            System.Console.WriteLine("C- Limpar Tela");
-            System.Console.WriteLine("X- Sair");
+			Console.WriteLine("1- Listar pessoas");
+			Console.WriteLine("2- Inserir nova pessoa");
+			Console.WriteLine("3- Atualizar pessoa");
+			Console.WriteLine("4- Excluir pessoa");
+			Console.WriteLine("5- Visualizar pessoa");
+			Console.WriteLine("C- Limpar Tela");
+			Console.WriteLine("X- Sair");
+			Console.WriteLine();
 
-            string opcaoUsuario = Console.ReadLine().ToUpper();
-            System.Console.WriteLine();
-            return opcaoUsuario;
-        }
+			string opcaoUsuario = Console.ReadLine().ToUpper();
+			Console.WriteLine();
+			return opcaoUsuario;
+		}
     }
 }
