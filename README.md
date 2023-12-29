@@ -1,2 +1,2 @@
 # cadastroDeSeriesSimples
-um cadastro bem simples
+um cadastro simples de series
